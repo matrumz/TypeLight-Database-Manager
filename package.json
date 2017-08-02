@@ -6,17 +6,24 @@
     },
     "license": "GPL-3.0",
     "version": "0.0.1",
-    "scripts": {},
+    "scripts": {
+        "cleandist": "rm -rf dist/*"
+    },
+    "main": "./dist/typelite.js",
+    "types": "./dist/typelite.d.ts",
     "dependencies": {
         "tssqlite": "1.0.1",
         "core-js": "2.4.1",
-        "q": "1.5.0"
+        "q": "1.5.0",
+        "command-line-commands": "2.0.1",
+        "command-line-args": "4.0.6"
     },
     "devDependencies": {
-        "typescript": "2.4.2",
+        "@types/node": "8.0.19",
+        "@types/q": "1.0.3",
         "concurrently": "3.5.0",
-        "@types/core-js": "0.9.42",
-        "@types/node": "8.0.17",
-        "@types/q": "1.0.3"
+        "typescript": "2.4.2",
+        "@types/command-line-commands": "2.0.0",
+        "@types/command-line-args": "4.0.0"
     }
 }

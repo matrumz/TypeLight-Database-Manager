@@ -9,8 +9,10 @@
         "allowUnreachableCode": false,
         "strict": true,
         "strictNullChecks": false,
-        "outDir": "dist"
-    },
+        "outDir": "dist",
+        "declaration": true,
+        "lib": ["es2015"]
+   },
     "include": [
         "src/**/*.ts"
     ],
