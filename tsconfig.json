@@ -11,13 +11,16 @@
         "strictNullChecks": false,
         "outDir": "dist",
         "declaration": true,
-        "lib": ["es2015"]
+        "lib": ["es2015"],
+
+         "typeRoots": [
+            "node_modules/@types"
+         ]
    },
     "include": [
         "src/**/*.ts"
     ],
     "exclude": [
-        "node_modules",
         "dist/**/*"
     ]
 }
