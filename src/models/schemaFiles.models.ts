@@ -7,13 +7,6 @@ export namespace TableFile
         constraints?: IConstraint[],
         triggers?: ITrigger[]
     }
-    /** Typecheck for ITable type */
-    export function isITable(object: any): object is ITable
-    {
-        return (
-            (<ITable>object).columns !== undefined
-        )
-    }
 
     /** Column record */
     export interface IColumn
