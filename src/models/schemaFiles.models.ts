@@ -44,7 +44,7 @@ export namespace TableFile
         {
             onConflict?: constraintConflictResolution
         }
-        export interface ICheckConstaint extends IConstraint
+        export interface ICheckConstraint extends IConstraint
         {
             expression: string
             onConflict?: constraintConflictResolution
