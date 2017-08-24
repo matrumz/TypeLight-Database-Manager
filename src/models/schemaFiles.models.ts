@@ -1,3 +1,5 @@
+import * as sqliteModels from "./sqite.models";
+
 export namespace TableFile
 {
     /** Represents the entire table file */
@@ -19,16 +21,16 @@ export namespace TableFile
     export interface IConstraint
     {
         name: string,
-        type: "pk" | "fk" | "nullable" | "unique" | "check",
+        type: sqliteModels.Constraint
         columns: string[]
     }
     export namespace ConstraintTypes
     {
-        export type constraintConflictResolution = "rollback" | "abort" | "fail" | "ignore" | "replace" // "abort" is sqlite default
+        export type constraintConflictResolution = sqliteModels.ConstraintConflictResolution
         export interface IPKConstraint extends IConstraint
         {
             onConflict?: constraintConflictResolution
-            order?: "asc" | "desc",
+            order?: sqliteModels.Order
             autoIncrement?: boolean
         }
         export interface IFKConstraint extends IConstraint
@@ -69,3 +71,5 @@ export namespace ViewFile
 
     }
 }
+
+export type SchemaEntityTypes = TableFile.ITable | ViewFile.IView

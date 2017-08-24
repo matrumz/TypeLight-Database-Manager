@@ -1,7 +1,5 @@
 import * as clArgs from "command-line-args";
 const clCommands = require("command-line-commands");
-import * as fileModels from "./models/schemaFiles.models"
-import { TableParser } from "./libs/tableParser"
 
 export class TLManager
 {
@@ -34,17 +32,4 @@ if (require.main === module) {
     catch (e) {
         console.error((<Error>e).message);
     }
-
-    var testObj: fileModels.TableFile.ITable = {
-        "columns": [
-            { name: "col1", type: "string" }
-        ]
-    }
-
-    // let objTable = new TableParser(testObj);
-    // let strTable = new TableParser("test")
-    // objTable.test();
-    // strTable.test();
-
-    console.log("DONE")
 }
