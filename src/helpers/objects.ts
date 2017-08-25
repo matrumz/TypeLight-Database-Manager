@@ -2,6 +2,10 @@ export class Summary
 {
     constructor(public errorMessages: string[] = [], public warningMessages: string[] = [], public infoMessages: string[] = []) { }
 
+    /**
+     * Append the passed summary to this summary.
+     * @param summary The summary to append to this.
+     */
     public append(summary: Summary): Summary
     {
         Array.prototype.push.apply(this.errorMessages, summary.errorMessages);
@@ -10,6 +14,10 @@ export class Summary
         return this;
     }
 
+    /**
+     * Returns a new summary that is the concatenation of this and the passed summary.
+     * @param summary The additional summary
+     */
     public concat(summary: Summary): Summary
     {
         var errorMessages = this.errorMessages.concat(summary.errorMessages);

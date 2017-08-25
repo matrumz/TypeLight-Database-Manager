@@ -2,7 +2,7 @@
 *.log
 npm-debug.log*
 
-# Dependency direcotories
+# Dependency directories
 node_modules/
 
 # NPM
@@ -11,6 +11,6 @@ node_modules/
 # Secret files
 *.secret.*
 
-# Non-source direcotories
+# Non-source directories
 dist/
 .vscode/

@@ -1,35 +1,59 @@
 import * as clArgs from "command-line-args";
 const clCommands = require("command-line-commands");
+import * as constants from "./services/dataConstants.service";
+import * as models from "./models/typelite.models";
 
-export class TLManager
+export class Typelite
 {
+    constructor() { }
 
+    // export function deploy(entities: )
 }
 
 /* CLI execution */
 if (require.main === module) {
-    const commandList: string[] = [
-        "deploy"//,
-        // "generate" // ONLY WORKING ON DEPLOY, ATM
-    ];
-    const optionsList: clArgs.OptionDefinition[] = [
-        { name: "xml", alias: "x", type: Boolean, defaultValue: false, group: ["deploy", "generate"] }, // Should read/write be done in XML vs JSON?
-        { name: "schema", alias: "s", type: String, multiple: false, defaultValue: "./", group: ["deploy", "generate"] }, // Directory of source files (schema, row, and event files)
-        { name: "databases", alias: "d", type: String, multiple: true, defaultValue: "db.sqlite3", group: ["deploy", "generate"] }, // Source/destination db(s) (with path)
-        { name: "clean", alias: "c", type: Boolean, defaultValue: false, group: "deploy" } // Should existing db files be cleaned when deployed to, or should existing data remain?
-    ];
-
+    /* Parse CLI */
     try {
-        const { command, argv } = clCommands(commandList);
+        /* Get the typelite command and arguments */
+        const { command, argv } = clCommands(constants.CLI.commands);
+        /* Parse the CLI options that go with the current command */
+        const args: any = clArgs(constants.CLI.options, { partial: true })[command];
 
-        console.log("command:   %s", command);
-        console.log("argv:      %s", JSON.stringify(argv));
+        // console.log("command:   %s", command);
+        // console.log("argv:      %s", JSON.stringify(argv));
+        // console.log("args:      %s", JSON.stringify(args));
 
-        const args = clArgs(optionsList, { partial: true });
+        switch (command) {
+            case "deploy":
+                cli.deploy({
+                    xml: args.xml,
+                    clean: args.clean,
+                    schema: args.schema,
+                    databases: args.databases
+                });
+                break;
+            case "generate":
+                cli.generate({
 
-        console.log("args:      %s", JSON.stringify(args[command]));
+                });
+                break;
+        }
     }
     catch (e) {
         console.error((<Error>e).message);
+
+    }
+}
+
+namespace cli
+{
+    export function deploy(params: models.ICliDeployParams): void
+    {
+
+    }
+
+    export function generate(params: models.ICliGenerateParams): void
+    {
+
     }
 }
