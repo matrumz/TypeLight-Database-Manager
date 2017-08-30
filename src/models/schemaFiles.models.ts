@@ -1,10 +1,12 @@
-import * as sqliteModels from "./sqite.models";
+import * as sqliteModels from "./sqlite.models";
 
 export namespace TableFile
 {
     /** Represents the entire table file */
     export interface ITable
     {
+        name: string,
+        database: string,
         columns: IColumn[],
         constraints?: IConstraint[],
         triggers?: ITrigger[]
@@ -14,7 +16,7 @@ export namespace TableFile
     export interface IColumn
     {
         name: string,
-        type: string
+        type: sqliteModels.SqliteData
     }
 
     /** Generic constraint record */

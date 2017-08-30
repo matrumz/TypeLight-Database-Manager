@@ -1,4 +1,4 @@
-import * as sqliteModels from "../../models/sqite.models";
+import * as sqliteModels from "../../models/sqlite.models";
 
 export class Column
 {
