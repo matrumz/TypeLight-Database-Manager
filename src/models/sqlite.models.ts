@@ -35,3 +35,7 @@ export type Constraint = "pk" | "fk" | "notnull" | "unique" | "check";
 export type ConstraintConflictResolution = "rollback" | "abort" | "fail" | "ignore" | "replace";
 
 export type Order = "asc" | "desc";
+
+export type TriggerTime = "before" | "after" | "instead";
+
+export type TriggerEvent = "delete" | "insert" | "update";

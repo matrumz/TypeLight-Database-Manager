@@ -62,7 +62,12 @@ export namespace TableFile
     /** Generic trigger record */
     export interface ITrigger
     {
-
+        name: string,
+        when: sqliteModels.TriggerTime,
+        event: sqliteModels.TriggerEvent,
+        eventColumns?: string[],
+        condition?: string,
+        executeStatements: string[]
     }
 }
 
