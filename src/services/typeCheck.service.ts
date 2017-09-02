@@ -34,6 +34,28 @@ export function isSqliteConstraintConflictResolution(object: any): object is sql
     );
 }
 
+export function isSqliteTriggerTime(object: any): object is sqliteModels.TriggerTime
+{
+    object = local.gentleLowerCase(object);
+
+    return (
+        object === "before"
+        || object === "after"
+        || object === "instead"
+    );
+}
+
+export function isSqliteTriggerEvent(object: any): object is sqliteModels.TriggerEvent
+{
+    object = local.gentleLowerCase(object);
+
+    return (
+        object === "delete"
+        || object === "insert"
+        || object === "update"
+    );
+}
+
 namespace local
 {
     export function gentleLowerCase(object: any): any
