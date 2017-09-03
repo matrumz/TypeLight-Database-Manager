@@ -34,6 +34,8 @@ export type Constraint = "pk" | "fk" | "notnull" | "unique" | "check" | "default
 /** "abort" is sqlite default */
 export type ConstraintConflictResolution = "rollback" | "abort" | "fail" | "ignore" | "replace";
 
+export var DefaultConstraintConflictResolution: ConstraintConflictResolution = "abort";
+
 export type Order = "asc" | "desc";
 
 export type TriggerTime = "before" | "after" | "instead";

@@ -35,7 +35,7 @@ export class PKConstraint extends Constraint implements IConflictableConstraint
         columns: string[] = [],
         public autoIncrement: boolean = true,
         public order: sqliteModels.Order = "asc",
-        public onConflict: sqliteModels.ConstraintConflictResolution = "abort"
+        public onConflict: sqliteModels.ConstraintConflictResolution = sqliteModels.DefaultConstraintConflictResolution
     )
     {
         super(name, columns);
@@ -84,7 +84,7 @@ export class NotNullConstraint extends Constraint implements IConflictableConstr
     constructor(
         name: string,
         columns: string[] = [],
-        public onConflict: sqliteModels.ConstraintConflictResolution = "abort",
+        public onConflict: sqliteModels.ConstraintConflictResolution = sqliteModels.DefaultConstraintConflictResolution,
     )
     {
         super(name, columns);
@@ -105,7 +105,7 @@ export class UniqueConstraint extends Constraint implements IConflictableConstra
     constructor(
         name: string,
         columns: string[] = [],
-        public onConflict: sqliteModels.ConstraintConflictResolution = "abort",
+        public onConflict: sqliteModels.ConstraintConflictResolution = sqliteModels.DefaultConstraintConflictResolution,
     )
     {
         super(name, columns);
@@ -127,7 +127,7 @@ export class CheckConstraint extends Constraint implements IConflictableConstrai
         name: string,
         columns: string[] = [],
         public checkExpression: string = null,
-        public onConflict: sqliteModels.ConstraintConflictResolution = "abort"
+        public onConflict: sqliteModels.ConstraintConflictResolution = sqliteModels.DefaultConstraintConflictResolution
     )
     {
         super(name, columns);
@@ -152,7 +152,7 @@ export class DefaultConstraint extends Constraint implements IConflictableConstr
         name: string,
         columns: string[] = [],
         public value: string | number = null,
-        public onConflict: sqliteModels.ConstraintConflictResolution = "abort"
+        public onConflict: sqliteModels.ConstraintConflictResolution = sqliteModels.DefaultConstraintConflictResolution
     )
     {
         super(name, columns);
