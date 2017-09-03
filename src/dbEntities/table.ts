@@ -61,7 +61,23 @@ export class Table extends Entity<TableFile.ITable>
             summary.append(this.onParseError(e, "constraint", "table"));
         }
 
-        //TODO: triggers
+        /* Triggers */
+        try {
+            this.triggers = object.triggers.map((fileTrigger) =>
+            {
+                return new subEntities.Trigger(
+                    fileTrigger.name,
+                    fileTrigger.when,
+                    fileTrigger.event,
+                    fileTrigger.eventColumns,
+                    fileTrigger.condition,
+                    fileTrigger.executeStatements
+                );
+            });
+        }
+        catch (e) {
+            summary.append(this.onParseError(e, "trigger", "table"));
+        }
 
         return summary;
     }
@@ -82,6 +98,31 @@ export class Table extends Entity<TableFile.ITable>
 
     public asJSON(): TableFile.ITable
     {
-        return null;
+        return {
+            name: this.name,
+            database: this.database,
+            columns: (this.columns || []).map((column): TableFile.IColumn =>
+            {
+                return {
+                    name: column.name,
+                    type: column.type
+                };
+            }),
+            constraints: (this.constraints || []).map((constraint): TableFile.IConstraint =>
+            {
+                return converters.EntityToFile.TableConstraint(constraint);
+            }),
+            triggers: (this.triggers || []).map((trigger): TableFile.ITrigger =>
+            {
+                return {
+                    name: trigger.name,
+                    when: trigger.when,
+                    event: trigger.event,
+                    eventColumns: trigger.eventColumns,
+                    condition: trigger.condition,
+                    executeStatements: trigger.executeStatements
+                };
+            })
+        };
     }
 }

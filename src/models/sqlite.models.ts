@@ -29,7 +29,7 @@ export type SqliteData = string;
 // DATE
 // DATETIME
 
-export type Constraint = "pk" | "fk" | "notnull" | "unique" | "check";
+export type Constraint = "pk" | "fk" | "notnull" | "unique" | "check" | "default";
 
 /** "abort" is sqlite default */
 export type ConstraintConflictResolution = "rollback" | "abort" | "fail" | "ignore" | "replace";

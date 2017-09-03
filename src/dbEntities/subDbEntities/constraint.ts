@@ -151,7 +151,8 @@ export class DefaultConstraint extends Constraint implements IConflictableConstr
     constructor(
         name: string,
         columns: string[] = [],
-        public onConflict: sqliteModels.ConstraintConflictResolution = "abort",
+        public value: string | number = null,
+        public onConflict: sqliteModels.ConstraintConflictResolution = "abort"
     )
     {
         super(name, columns);

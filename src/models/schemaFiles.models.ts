@@ -55,6 +55,7 @@ export namespace TableFile
         }
         export interface IDefaultConstraint extends IConstraint
         {
+            value: string | number
             onConflict?: constraintConflictResolution
         }
     }
