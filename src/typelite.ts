@@ -1,13 +1,32 @@
 import * as clArgs from "command-line-args";
-const clCommands = require("command-line-commands");
+import clCommands = require("command-line-commands");
 import * as constants from "./services/dataConstants.service";
 import * as models from "./models/typelite.models";
+import * as fsio from "./fsio/fsio.grouping";
 
 export class Typelite
 {
     constructor() { }
 
     // export function deploy(entities: )
+}
+
+namespace CLI
+{
+    export function deploy(params: models.ICliDeployParams): void
+    {
+
+    }
+
+    export function generate(params: models.ICliGenerateParams): void
+    {
+
+    }
+
+    export function test(): void
+    {
+        console.log(fsio.findFiles('../test', true, 'json', '.*test\\w.*'));
+    }
 }
 
 /* CLI execution */
@@ -25,7 +44,7 @@ if (require.main === module) {
 
         switch (command) {
             case "deploy":
-                cli.deploy({
+                CLI.deploy({
                     xml: args.xml,
                     clean: args.clean,
                     schema: args.schema,
@@ -33,27 +52,16 @@ if (require.main === module) {
                 });
                 break;
             case "generate":
-                cli.generate({
+                CLI.generate({
 
                 });
+                break;
+            case "test":
+                CLI.test();
                 break;
         }
     }
     catch (e) {
         console.error((<Error>e).message);
-
-    }
-}
-
-namespace cli
-{
-    export function deploy(params: models.ICliDeployParams): void
-    {
-
-    }
-
-    export function generate(params: models.ICliGenerateParams): void
-    {
-
     }
 }

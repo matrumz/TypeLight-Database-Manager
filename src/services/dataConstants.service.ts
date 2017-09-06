@@ -4,7 +4,8 @@ export namespace CLI
 {
     export const commands: string[] = [
         //"generate",
-        "deploy"
+        "deploy",
+        "test"
     ];
 
     export const options: clArgs.OptionDefinition[] = [
