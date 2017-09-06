@@ -22,3 +22,7 @@ export interface ICliGenerateParams
 {
 
 }
+
+export interface ITypeliteConfiguration {
+    fileEncoding: string
+}

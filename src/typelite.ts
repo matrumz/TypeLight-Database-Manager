@@ -3,12 +3,35 @@ import clCommands = require("command-line-commands");
 import * as constants from "./services/dataConstants.service";
 import * as models from "./models/typelite.models";
 import * as fsio from "./fsio/fsio.grouping";
+import * as path from "path";
+import * as fs from "fs";
+import { Memory } from "./services/dataStore.service";
+import * as helperObjects from "./helpers/objects";
 
 export class Typelite
 {
-    constructor() { }
+    constructor(cliMode: boolean = false)
+    {
+        /* Load some initial values into session storage */
+        Memory.cliMode = cliMode;
+        try {
+            /*
+             * This one time, we are assuming the encoding of a file is UTF8.
+             * That will be a noted requirement in the documentation.
+             */
+            Memory.config = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../typeliteconfig.json")).toString());
+        }
+        catch (e) {
+            throw new Error("Could not load configuration file: " + (<Error>e).message);
+        }
+    }
 
-    // export function deploy(entities: )
+    // public deploy(entities: )
+
+    public test(): void
+    {
+        var filesContents: helperObjects.ResultSummary<string[]> = fsio.read(fsio.find('../test', true, 'json', "good.*"));
+    }
 }
 
 namespace CLI
@@ -25,7 +48,8 @@ namespace CLI
 
     export function test(): void
     {
-        console.log(fsio.findFiles('../test', true, 'json', '.*test\\w.*'));
+        var typelite = new Typelite(true);
+        typelite.test();
     }
 }
 

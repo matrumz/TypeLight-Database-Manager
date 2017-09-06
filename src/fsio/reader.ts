@@ -1,8 +1,28 @@
 import * as fs from "fs";
 import * as path from "path";
 import * as helperFunctions from "../helpers/functions";
+import * as helperObjects from "../helpers/objects";
+import { Memory } from "../services/dataStore.service";
 
-export function findFiles(searchPath: string, recursive: boolean = false, fileType: string = null, fileNameRegex: string = null): string[]
+export function read(files: string[]): helperObjects.ResultSummary<string[]>
+{
+    var result = new helperObjects.ResultSummary<string[]>([]);
+
+    files.forEach((filePath) =>
+    {
+        try {
+            var contents = fs.readFileSync(filePath, Memory.config.fileEncoding);
+            result.data.push(contents);
+        }
+        catch (e) {
+            result.summary.errorMessages.push("Could not read " + filePath + ": " + (<Error>e).message);
+        }
+    });
+
+    return result;
+}
+
+export function find(searchPath: string, recursive: boolean = false, fileType: string = null, fileNameRegex: string = null): string[]
 {
     /* Initialize values */
     var fileList: string[];
