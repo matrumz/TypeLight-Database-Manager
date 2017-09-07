@@ -1,0 +1,25 @@
+{
+    "name": "SecondGoodTable",
+    "database": "master",
+    "columns": [
+        {
+            "name": "Id",
+            "type": "integer"
+        },
+        {
+            "name": "OkData",
+            "type": "varchar(20)"
+        }
+    ],
+    "triggers": [
+        {
+            "name": "ADecentTriggerName",
+            "when": "after",
+            "event": "update",
+            "condition": "Id > 10",
+            "executeStatements": [
+                "delete from FirstGoodTable;"
+            ]
+        }
+    ]
+}

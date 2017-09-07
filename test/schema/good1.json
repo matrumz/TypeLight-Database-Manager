@@ -1,0 +1,33 @@
+{
+    "name": "FirstGoodTable",
+    "database": "master",
+    "columns": [
+        {
+            "name": "Id",
+            "type": "integer"
+        },
+        {
+            "name": "GoodData",
+            "type": "varchar(20)"
+        }
+    ],
+    "constraints": [
+        {
+            "name": "PK",
+            "type": "pk",
+            "columns": [
+                "Id"
+            ],
+            "autoIncrement": true
+        },
+        {
+            "name": "UQ_FirstGoodTable_GoodData",
+            "type": "unique",
+            "columns": [
+                "Id",
+                "GoodData"
+            ],
+            "onConflict": "this is not valid input"
+        }
+    ]
+}

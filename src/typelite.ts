@@ -2,11 +2,14 @@ import * as clArgs from "command-line-args";
 import clCommands = require("command-line-commands");
 import * as constants from "./services/dataConstants.service";
 import * as models from "./models/typelite.models";
+import * as schemaModels from "./models/schemaFiles.models";
 import * as fsio from "./fsio/fsio.grouping";
 import * as path from "path";
 import * as fs from "fs";
 import { Memory } from "./services/dataStore.service";
 import * as helperObjects from "./helpers/objects";
+import * as typeChecker from "./services/typeCheck.service";
+import { Table } from "./dbEntities/table";
 
 export class Typelite
 {
@@ -30,7 +33,37 @@ export class Typelite
 
     public test(): void
     {
-        var filesContents: helperObjects.ResultSummary<string[]> = fsio.read(fsio.find('../test', true, 'json', "good.*"));
+        var results = new helperObjects.ResultSummary<Table[]>();
+        results.data = [];
+
+        var filesContents: helperObjects.ResultSummary<string[]> = fsio.read(fsio.find('../test', true, 'json'));
+        var filesAsJSON: any[] = [];
+
+        filesContents.data.forEach((content) =>
+        {
+            try {
+                var obj = JSON.parse(content);
+                filesAsJSON.push(obj);
+            }
+            catch (e) {
+                results.summary.errorMessages.push(("Could not parse: " + content));
+            }
+        });
+
+        filesAsJSON.forEach((obj) =>
+        {
+            try {
+                if (typeChecker.isITable(obj)) {
+                    var t: Table = new Table(null, null, obj);
+                    results.data.push(t);
+                }
+            }
+            catch (e) {
+                results.summary.errorMessages.push("Could not parse table: " + (<Error>e).message);
+            }
+        });
+
+        console.log(results)
     }
 }
 
