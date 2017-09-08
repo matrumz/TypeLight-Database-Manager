@@ -31,7 +31,7 @@ export class Typelite
 
     // public deploy(entities: )
 
-    public test(): void
+    public debug(): void
     {
         var results = new helperObjects.ResultSummary<Table[]>();
         results.data = [];
@@ -79,10 +79,10 @@ namespace CLI
 
     }
 
-    export function test(): void
+    export function debug(): void
     {
         var typelite = new Typelite(true);
-        typelite.test();
+        typelite.debug();
     }
 }
 
@@ -113,8 +113,8 @@ if (require.main === module) {
 
                 });
                 break;
-            case "test":
-                CLI.test();
+            case "debug":
+                CLI.debug();
                 break;
         }
     }
