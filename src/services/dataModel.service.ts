@@ -17,3 +17,12 @@ export function IDeploymentOptionsInstance(path: string = null, entityExistsOpti
         entityExistsOptions: entityExistsOptions
     };
 }
+
+export function IFileWriteJobInstance(fileName: string = null, path: string = null, contents: string = null): models.IFileWriteJob
+{
+    return {
+        fileName: fileName,
+        path: path,
+        contents: contents
+    };
+}

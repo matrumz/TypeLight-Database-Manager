@@ -10,6 +10,8 @@ import { Memory } from "./services/dataStore.service";
 import * as helperObjects from "./helpers/objects";
 import * as typeChecker from "./services/typeCheck.service";
 import { Table } from "./dbEntities/table";
+import * as dataModel from "./services/dataModel.service";
+import * as assert from "assert";
 
 export class Typelite
 {
@@ -36,7 +38,7 @@ export class Typelite
         var results = new helperObjects.ResultSummary<Table[]>();
         results.data = [];
 
-        var filesContents: helperObjects.ResultSummary<string[]> = fsio.read(fsio.find('../test', true, 'json'));
+        var filesContents: helperObjects.ResultSummary<string[]> = fsio.read(fsio.find('../test', true, 'json', "read_.*"));
         var filesAsJSON: any[] = [];
 
         filesContents.data.forEach((content) =>
@@ -62,6 +64,34 @@ export class Typelite
                 results.summary.errorMessages.push("Could not parse table: " + (<Error>e).message);
             }
         });
+
+        var writeJobs = results.data.map((table) =>
+        {
+            return dataModel.IFileWriteJobInstance(
+                [table.database || "", "table", table.name || "", "json"].join("."),
+                "../test/schema/out/",
+                JSON.stringify(table.asJSON())
+            );
+        });
+
+        results.summary.append(fsio.write(writeJobs));
+
+        var reloadedTables: Table[] =
+            fsio.read(fsio.find("../test/schema/out", false, "json"))
+                .data.map((content) =>
+                {
+                    return new Table(null, null, JSON.parse(content));
+                });
+
+        try {
+            assert.deepEqual(reloadedTables, results.data, "Load results do not match.");
+            results.summary.infoMessages.push("SUCCESS!");
+        }
+        catch (e) {
+            results.summary.errorMessages.push((<Error>e).message);
+        }
+
+
 
         console.log(results)
     }

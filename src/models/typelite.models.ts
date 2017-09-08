@@ -26,3 +26,9 @@ export interface ICliGenerateParams
 export interface ITypeliteConfiguration {
     fileEncoding: string
 }
+
+export interface IFileWriteJob {
+    fileName: string;
+    path: string;
+    contents: string;
+}
