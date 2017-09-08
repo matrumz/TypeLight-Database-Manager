@@ -5,7 +5,7 @@
         "url": "https://github.com/matrumz/TypeLite-Database-Manager"
     },
     "license": "GPL-3.0",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "scripts": {
         "cleandist": "rm -rf dist/*"
     },
