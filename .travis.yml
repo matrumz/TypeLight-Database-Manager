@@ -1,0 +1,7 @@
+language: node_js
+node_js:
+- 8
+before_install:
+- sudo npm install -g typescript
+script:
+- npm test

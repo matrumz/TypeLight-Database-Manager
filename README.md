@@ -1,5 +1,5 @@
 [![view on npm](https://img.shields.io/npm/v/typelite.svg)](https://www.npmjs.org/package/typelite)
-[![Build Status](https://travis-ci.org/75lb/command-line-args.svg?branch=master)](https://travis-ci.org/75lb/command-line-args)
+[![Build Status](https://travis-ci.org/matrumz/TypeLite-Database-Manager.svg?branch=travisCI-integration-test)](https://travis-ci.org/matrumz/TypeLite-Database-Manager)
 
 # TypeLite-Database-Manager
 A Typescript-SQLite interface for generating version-control-friendly database representations and deploying these generated files as new databases.

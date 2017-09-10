@@ -35,65 +35,53 @@ export class Typelite
 
     public debug(): void
     {
+
+    }
+
+    public test(): void
+    {
         var results = new helperObjects.ResultSummary<Table[]>();
         results.data = [];
 
-        var filesContents: helperObjects.ResultSummary<string[]> = fsio.read(fsio.find('../test', true, 'json', "read_.*"));
+        var filesContents: helperObjects.ResultSummary<string[]> = fsio.read(fsio.find(__dirname + path.sep + '../test', true, 'json', "read_.*"));
         var filesAsJSON: any[] = [];
 
         filesContents.data.forEach((content) =>
         {
-            try {
-                var obj = JSON.parse(content);
-                filesAsJSON.push(obj);
-            }
-            catch (e) {
-                results.summary.errorMessages.push(("Could not parse: " + content));
-            }
+            var obj = JSON.parse(content);
+            filesAsJSON.push(obj);
         });
 
         filesAsJSON.forEach((obj) =>
         {
-            try {
-                if (typeChecker.isITable(obj)) {
-                    var t: Table = new Table(null, null, obj);
-                    results.data.push(t);
-                }
-            }
-            catch (e) {
-                results.summary.errorMessages.push("Could not parse table: " + (<Error>e).message);
+            if (typeChecker.isITable(obj)) {
+                var t: Table = new Table(null, null, obj);
+                results.data.push(t);
             }
         });
 
+        var resultsDir: string = __dirname + path.sep + "../test/results/";
         var writeJobs = results.data.map((table) =>
         {
             return dataModel.IFileWriteJobInstance(
                 [table.database || "", "table", table.name || "", "json"].join("."),
-                "../test/schema/out/",
+                resultsDir,
                 JSON.stringify(table.asJSON())
             );
         });
 
         results.summary.append(fsio.write(writeJobs));
+        if (results.summary.errorMessages.length)
+            throw new Error("Error writing schema files");
 
         var reloadedTables: Table[] =
-            fsio.read(fsio.find("../test/schema/out", false, "json"))
+            fsio.read(fsio.find(resultsDir, false, "json"))
                 .data.map((content) =>
                 {
                     return new Table(null, null, JSON.parse(content));
                 });
 
-        try {
-            assert.deepEqual(reloadedTables, results.data, "Load results do not match.");
-            results.summary.infoMessages.push("SUCCESS!");
-        }
-        catch (e) {
-            results.summary.errorMessages.push((<Error>e).message);
-        }
-
-
-
-        console.log(results)
+        assert.deepEqual(reloadedTables, results.data, "Load results do not match.");
     }
 }
 
@@ -114,41 +102,41 @@ namespace CLI
         var typelite = new Typelite(true);
         typelite.debug();
     }
+
+    export function test(): void
+    {
+        var typelite = new Typelite(true);
+        typelite.test();
+    }
 }
 
 /* CLI execution */
 if (require.main === module) {
     /* Parse CLI */
-    try {
-        /* Get the typelite command and arguments */
-        const { command, argv } = clCommands(constants.CLI.commands);
-        /* Parse the CLI options that go with the current command */
-        const args: any = clArgs(constants.CLI.options, { partial: true })[command];
+    /* Get the typelite command and arguments */
+    const { command, argv } = clCommands(constants.CLI.commands);
+    /* Parse the CLI options that go with the current command */
+    const args: any = clArgs(constants.CLI.options, { partial: true })[command];
 
-        // console.log("command:   %s", command);
-        // console.log("argv:      %s", JSON.stringify(argv));
-        // console.log("args:      %s", JSON.stringify(args));
+    switch (command) {
+        case "deploy":
+            CLI.deploy({
+                xml: args.xml,
+                clean: args.clean,
+                schema: args.schema,
+                databases: args.databases
+            });
+            break;
+        case "generate":
+            CLI.generate({
 
-        switch (command) {
-            case "deploy":
-                CLI.deploy({
-                    xml: args.xml,
-                    clean: args.clean,
-                    schema: args.schema,
-                    databases: args.databases
-                });
-                break;
-            case "generate":
-                CLI.generate({
-
-                });
-                break;
-            case "debug":
-                CLI.debug();
-                break;
-        }
-    }
-    catch (e) {
-        console.error((<Error>e).message);
+            });
+            break;
+        case "debug":
+            CLI.debug();
+            break;
+        case "test":
+            CLI.test();
+            break;
     }
 }

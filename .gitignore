@@ -14,3 +14,4 @@ node_modules/
 # Non-source directories
 dist/
 .vscode/
+test/results
