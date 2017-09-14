@@ -2,10 +2,10 @@ import * as fs from "fs";
 import * as path from "path";
 import * as helperFunctions from "../helpers/functions";
 import * as helperObjects from "../helpers/objects";
-import { IFileWriteJob } from "../models/typelite.models";
+import { FSWriteJob } from "./fsJobs";
 import { Memory } from "../services/dataStore.service";
 
-export function write(jobs: IFileWriteJob[]): helperObjects.Summary
+export function write(jobs: FSWriteJob[]): helperObjects.Summary
 {
     var summary = new helperObjects.Summary();
 

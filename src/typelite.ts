@@ -2,7 +2,6 @@ import * as clArgs from "command-line-args";
 import clCommands = require("command-line-commands");
 import * as constants from "./services/dataConstants.service";
 import * as models from "./models/typelite.models";
-import * as schemaModels from "./models/schemaFiles.models";
 import * as fsio from "./fsio/fsio.grouping";
 import * as path from "path";
 import * as fs from "fs";
@@ -63,7 +62,7 @@ export class Typelite
         var resultsDir: string = __dirname + path.sep + "../test/results/";
         var writeJobs = results.data.map((table) =>
         {
-            return dataModel.IFileWriteJobInstance(
+            return new fsio.FSWriteJob(
                 [table.database || "", "table", table.name || "", "json"].join("."),
                 resultsDir,
                 JSON.stringify(table.asJSON())
