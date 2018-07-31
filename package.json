@@ -13,7 +13,7 @@
     "main": "./dist/typelite.js",
     "types": "./dist/typelite.d.ts",
     "dependencies": {
-        "better-sqlite3": "3.1.2",
+        "better-sqlite3": "4.0.2",
         "command-line-args": "4.0.6",
         "command-line-commands": "2.0.1",
         "core-js": "^2.5.1",
@@ -24,6 +24,7 @@
         "@types/command-line-commands": "2.0.0",
         "@types/node": "8.0.19",
         "@types/q": "1.0.3",
+        "@types/better-sqlite3": "^3.1.2",
         "concurrently": "3.5.0",
         "typescript": "^2.5.2"
     }

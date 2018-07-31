@@ -38,7 +38,11 @@ export function write(jobs: FSWriteJob[]): helperObjects.Summary
     return summary;
 }
 
-function walk(targetDir: string): helperObjects.Summary
+/**
+ * Equivalent of mkdir -p
+ * @param targetDir
+ */
+export function walk(targetDir: string): helperObjects.Summary
 {
     var summary = new helperObjects.Summary();
 
